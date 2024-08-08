@@ -1,0 +1,244 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({
+    Name = "OxyHub V2", 
+    HidePremium = false, 
+    SaveConfig = true, 
+    ConfigFolder = "OxyHubConfig"
+})
+
+-- Subscription Status Tab
+local SubTab = Window:MakeTab({
+    Name = "Subscription Status",
+    Icon = "rbxassetid://7743875759",  -- You can use a placeholder icon for the subscription tab
+    PremiumOnly = false
+})
+
+-- Subscription data with end dates
+local subscriptions = {
+    [4057666714] = { type = "Owner", endDate = "Never" },
+    [7100761159] = { type = "Monthly", endDate = "2024-08-31 23:59:59" },
+    [7113890889] = { type = "Monthly", endDate = "2024-08-31 23:59:59" },
+    [144210698]  = { type = "Monthly", endDate = "2024-08-31 23:59:59" },
+    [1384102768] = { type = "Owner", endDate = "Never" }
+}
+
+-- Function to get the current date and time
+local function getCurrentTime()
+    return os.date("%Y-%m-%d %H:%M:%S", os.time())
+end
+
+-- Function to remove expired subscriptions
+local function checkAndRemoveExpiredSubscriptions()
+    local userId = game.Players.LocalPlayer.UserId
+    local subscription = subscriptions[userId]
+    if subscription and subscription.endDate ~= "Never" then
+        if subscription.endDate <= getCurrentTime() then
+            subscriptions[userId] = nil
+            return "Subscription Expired"
+        end
+    end
+end
+
+-- Function to get subscription status
+local function getSubscriptionStatus()
+    local userId = game.Players.LocalPlayer.UserId
+    local subscription = subscriptions[userId]
+    if subscription then
+        if subscription.type == "Owner" then
+            return "Owner"
+        else
+            return subscription.type .. " - Ends on " .. subscription.endDate
+        end
+    else
+        return "None"
+    end
+end
+
+-- Perform the expiration check
+checkAndRemoveExpiredSubscriptions()
+
+-- Add status display to the Subscription Status tab
+SubTab:AddLabel("Your Subscription Status:")
+SubTab:AddLabel("Status: " .. getSubscriptionStatus())
+
+-- Game Tabs (add these after the subscription check)
+local userId = game.Players.LocalPlayer.UserId
+if subscriptions[userId] then
+    -- Da Hood Tab
+    local DH = Window:MakeTab({
+        Name = "Da Hood",
+        Icon = "rbxassetid://7734053426",
+        PremiumOnly = false
+    })
+    DH:AddButton({
+        Name = "Azure Modded",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Actyrn/Scripts/main/AzureModded"))()
+        end    
+    })
+    
+    DH:AddButton({
+        Name = "Agent",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/mrhackerman35297/AgentCC/main/Launch.lua"))()
+        end    
+    })
+    
+    DH:AddButton({
+        Name = "Nuker Hub",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Allvideo1/Nukermode/main/Nukerscript"))()
+        end    
+    })
+    
+    DH:AddButton({
+        Name = "BladLock",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sdfesdfsedf/srgtergasdfs/main/wwwwwww", true))()
+        end    
+    })
+
+    -- Murder Mystery 2 Tab
+    local MM2 = Window:MakeTab({
+        Name = "Murder Mystery 2",
+        Icon = "rbxassetid://7734052570",  -- "scissors"
+        PremiumOnly = false
+    })
+
+    MM2:AddButton({
+        Name = "Highlight Hub 2.0",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/ThatSick/HighlightMM2/main/Main"))()
+            local key = "hlvipcomingsoon"
+            OrionLib:MakeNotification({
+                Name = "Key Copied",
+                Content = "Key: " .. key .. " has been copied to your clipboard!",
+                Image = "rbxassetid://7743875759",
+                Time = 10
+            })
+            setclipboard(key)
+        end    
+    })
+
+    MM2:AddButton({
+        Name = "Yarhm",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Joystickplays/psychic-octo-invention/main/yarhm.lua", false))()
+        end    
+    })
+
+    MM2:AddButton({
+        Name = "R3TH PRIV",
+        Callback = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/R3TH-PRIV/R3THPRIV/main/loader.lua'))()
+        end    
+    })
+
+    MM2:AddButton({
+        Name = "Symphony",
+        Callback = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/ThatSick/ArrayField/main/SymphonyHub.lua'))()
+        end    
+    })
+
+    MM2:AddButton({
+        Name = "SnapSanix Hub",
+        Callback = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/Roman34296589/SnapSanix-GUI-MM2/main/SnapSanix%20GUI%20mm2.lua'))()
+        end    
+    })
+
+    -- Blox Fruits Tab
+    local BF = Window:MakeTab({
+        Name = "Blox Fruits",
+        Icon = "rbxassetid://7734068321",  -- "star" (Placeholder for fruit icon)
+        PremiumOnly = false
+    })
+
+    BF:AddButton({
+        Name = "Hyper Hub",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/2133121233/Hyper_Hub/main/menu.lua"))()
+        end    
+    })
+
+    BF:AddButton({
+        Name = "SlimeX Chest",
+        Callback = function()
+            getgenv().Setting = { 
+                ["BlackScreen"] = true, 
+                ["TimeReset"] = 4.5, 
+                ["ModFarm"] = { 
+                    ["StopItemLegendary"] = false, 
+                    ["SummonKillDarkbeard"] = false 
+                } 
+            }
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Slimexiuem/MenuSlime/main/Farmchestv2"))()
+        end    
+    })
+
+    BF:AddButton({
+        Name = "X-Sea Hub",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/XRayDerxDOne/Release-/main/Release.lua"))()
+        end    
+    })
+
+    -- Strongest BattleGrounds Tab
+    local SB = Window:MakeTab({
+        Name = "Strongest BattleGrounds",
+        Icon = "rbxassetid://7734056608",  -- "shield"
+        PremiumOnly = false
+    })
+
+    SB:AddButton({
+        Name = "Lightux",
+        Callback = function()
+            loadstring(game:HttpGet(('https://raw.githubusercontent.com/cool83birdcarfly02six/Lightux/main/README.md'),true))()
+        end    
+    })
+
+    SB:AddButton({
+        Name = "Neutron",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/PawsThePaw/Neutron.lua/main/MainNeutron.lua"))()
+        end    
+    })
+
+    -- Arsenal Tab
+    local Arsenal = Window:MakeTab({
+        Name = "Arsenal",
+        Icon = "rbxassetid://7743872758",  -- "target"
+        PremiumOnly = false
+    })
+
+    Arsenal:AddButton({
+        Name = "MySploit",
+        Callback = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/wuhaz/arsenal/main/main.lua'))()
+        end    
+    })
+
+    Arsenal:AddButton({
+        Name = "MidNight",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/laeraz/midnightcc/main/public.lua"))()
+        end    
+    })
+
+    Arsenal:AddButton({
+        Name = "Thunder Client",
+        Callback = function()
+            loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/b95e8fecdf824e41f4a030044b055add.lua"))()
+        end    
+    })
+
+    Arsenal:AddButton({
+        Name = "VG HUB",
+        Callback = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub'))()
+        end    
+    })
+end
+
+OrionLib:Init()
